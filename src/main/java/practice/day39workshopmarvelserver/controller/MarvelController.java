@@ -48,10 +48,11 @@ public class MarvelController {
         }
         
         // call from Marvel API and save to MySQL
-        String response = svc.getCharacters(nameStartsWith.trim(), limit.get(), offset.get()).getBody();
-        marvelSvc.saveCharacter(response);
+        ResponseEntity<String> response = svc.getCharacters(nameStartsWith.trim(), limit.get(), offset.get());
+        String responseBody = response.getBody();
+        marvelSvc.saveCharacter(responseBody);
 
-        return svc.getCharacters(nameStartsWith.trim(), limit.get(), offset.get());
+        return response;
     }
 
     @GetMapping("/character/{characterId}")
