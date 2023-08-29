@@ -1,5 +1,6 @@
 package practice.day39workshopmarvelserver.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.json.Json;
+import practice.day39workshopmarvelserver.model.Comment;
 import practice.day39workshopmarvelserver.model.MarvelChar;
 import practice.day39workshopmarvelserver.service.APIservice;
 import practice.day39workshopmarvelserver.service.MarvelService;
@@ -66,6 +68,12 @@ public class MarvelController {
     public ResponseEntity<String> postComment(@PathVariable Integer characterId, @RequestBody String payload){
         marvelSvc.saveComment(characterId, payload);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(path = "/character/{characterId}/comments")
+    public ResponseEntity<List<Comment>> getComments(@PathVariable Integer characterId){
+        List<Comment> list = marvelSvc.getComments(characterId);
+        return ResponseEntity.status(200).body(list);
     }
 
 }

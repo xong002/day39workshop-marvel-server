@@ -37,7 +37,10 @@ public class MarvelCharRepository {
         template.update(INSERT_COMMENT_SQL, comment.getComments(), comment.getCharId());
     }
 
-    
+    public List<Comment> getComments(Integer charId){
+        List<Comment> list = template.query(GET_COMMENTS_BY_CHAR_ID_SQL, BeanPropertyRowMapper.newInstance(Comment.class), charId);
+        return list;
+    }
 
     
 }

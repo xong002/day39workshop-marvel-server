@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,5 +53,9 @@ public class MarvelService {
         newComment.setComments(o.getString("comments"));
         newComment.setCharId(charId);
         repo.saveComment(newComment);
+    }
+
+    public List<Comment> getComments(Integer charId){
+        return repo.getComments(charId);
     }
 }
