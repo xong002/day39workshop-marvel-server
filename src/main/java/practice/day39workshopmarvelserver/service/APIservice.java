@@ -3,6 +3,7 @@ package practice.day39workshopmarvelserver.service;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class APIservice {
         try {
             //MD5 hashing
             MessageDigest md = MessageDigest.getInstance("MD5");
-            String newDate = String.valueOf(new Date().getTime() / 1000);
+            String newDate = String.valueOf(LocalDate.now());
             String stringToBeHashed = newDate + privateAPIKey + publicAPIKey;
             byte[] mdByteArray = md.digest(stringToBeHashed.getBytes());
             BigInteger bigInt = new BigInteger(1, mdByteArray);
