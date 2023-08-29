@@ -19,10 +19,10 @@ public class APIservice {
 
     private String marvelURL = "http://gateway.marvel.com/v1/public/characters";
 
-    @Value("${MARVEL_PUBLIC_APIKEY}")
+    @Value("${marvel.publickey}")
     private String publicAPIKey;
 
-    @Value("${MARVEL_PRIVATE_APIKEY}")
+    @Value("${marvel.privatekey}")
     private String privateAPIKey;
 
     public ResponseEntity<String> getCharacters(String nameStartsWith, Integer limit, Integer offset) {
