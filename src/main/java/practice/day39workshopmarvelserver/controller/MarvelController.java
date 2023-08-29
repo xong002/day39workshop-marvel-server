@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.json.Json;
 import practice.day39workshopmarvelserver.service.APIservice;
+import practice.day39workshopmarvelserver.service.MarvelService;
 
 @RestController
 @RequestMapping("/api")
@@ -18,6 +19,9 @@ public class MarvelController {
 
     @Autowired
     private APIservice svc;
+
+    @Autowired
+    private MarvelService marvelSvc;
 
     @GetMapping("/characters")
     public ResponseEntity<String> getCharacters(@RequestParam String nameStartsWith,
@@ -29,16 +33,22 @@ public class MarvelController {
                             .add("message", "nameStartsWith cannot be blank")
                             .toString());
         }
-
         if (limit.isEmpty()) {
             limit = Optional.of(20);
         }
-
         if (offset.isEmpty()) {
             offset = Optional.of(0);
         }
+        
+        // TODO: check with MySQL db for characters first before calling from API
+
+        // call from Marvel API and save to MySQL
+        String response = svc.getCharacters(nameStartsWith.trim(), limit.get(), offset.get()).getBody();
+        marvelSvc.saveCharacter(response);
 
         return svc.getCharacters(nameStartsWith.trim(), limit.get(), offset.get());
+
+
     }
 
 }
