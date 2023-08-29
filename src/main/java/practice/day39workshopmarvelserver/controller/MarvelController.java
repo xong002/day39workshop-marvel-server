@@ -21,7 +21,7 @@ import practice.day39workshopmarvelserver.service.APIservice;
 import practice.day39workshopmarvelserver.service.MarvelService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 public class MarvelController {
 
     @Autowired
