@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,8 +18,12 @@ import jakarta.json.Json;
 public class APIservice {
 
     private String marvelURL = "http://gateway.marvel.com/v1/public/characters";
-    private String publicAPIKey = "3924f6390d0fdc30f3fc44f644d13034";
-    private String privateAPIKey = "c6b21eebe218897107a4fa771befa7737da36d79";
+
+    @Value("${MARVEL_PUBLIC_APIKEY}")
+    private String publicAPIKey;
+
+    @Value("${MARVEL_PRIVATE_APIKEY}")
+    private String privateAPIKey;
 
     public ResponseEntity<String> getCharacters(String nameStartsWith, Integer limit, Integer offset) {
         RestTemplate template = new RestTemplate();
