@@ -5,11 +5,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.json.Json;
+import practice.day39workshopmarvelserver.model.MarvelChar;
 import practice.day39workshopmarvelserver.service.APIservice;
 import practice.day39workshopmarvelserver.service.MarvelService;
 
@@ -40,15 +42,22 @@ public class MarvelController {
             offset = Optional.of(0);
         }
         
-        // TODO: check with MySQL db for characters first before calling from API
-
         // call from Marvel API and save to MySQL
         String response = svc.getCharacters(nameStartsWith.trim(), limit.get(), offset.get()).getBody();
         marvelSvc.saveCharacter(response);
 
         return svc.getCharacters(nameStartsWith.trim(), limit.get(), offset.get());
-
-
     }
+
+    @GetMapping("/character/{characterId}")
+    public ResponseEntity<MarvelChar> getCharacterById(@PathVariable Integer characterId){
+        MarvelChar result = marvelSvc.getMarvelCharById(characterId);
+        if(result == null){
+            return ResponseEntity.notFound().build();
+            // TODO: call from Marvel API if not found
+        }
+        return ResponseEntity.status(200).body(result);
+    }
+    
 
 }

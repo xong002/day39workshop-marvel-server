@@ -17,17 +17,17 @@ import practice.day39workshopmarvelserver.repository.MarvelCharRepository;
 
 @Service
 public class MarvelService {
-    
+
     @Autowired
     private MarvelCharRepository repo;
 
-    public void saveCharacter(String jsonString){
+    public void saveCharacter(String jsonString) {
 
-         try (InputStream is = new ByteArrayInputStream(jsonString.getBytes())) {
+        try (InputStream is = new ByteArrayInputStream(jsonString.getBytes())) {
             JsonReader r = Json.createReader(is);
             JsonObject o = r.readObject();
             JsonArray jsonArray = o.getJsonObject("data").getJsonArray("results");
-            for(JsonValue jsonValue : jsonArray){
+            for (JsonValue jsonValue : jsonArray) {
                 MarvelChar mChar = new MarvelChar();
                 JsonObject jsonObj = jsonValue.asJsonObject();
                 mChar.toMarvelChar(jsonObj);
@@ -36,8 +36,10 @@ public class MarvelService {
             }
         } catch (IOException ioe) {
             ioe.printStackTrace();
-        } 
+        }
+    }
 
-
+    public MarvelChar getMarvelCharById(Integer id){
+        return repo.getMarvelCharById(id);
     }
 }
