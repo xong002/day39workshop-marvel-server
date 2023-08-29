@@ -19,7 +19,7 @@ public class APIservice {
     private String publicAPIKey = "3924f6390d0fdc30f3fc44f644d13034";
     private String privateAPIKey = "c6b21eebe218897107a4fa771befa7737da36d79";
 
-    public ResponseEntity<String> getCharacters() {
+    public ResponseEntity<String> getCharacters(String nameStartsWith, Integer limit, Integer offset) {
         RestTemplate template = new RestTemplate();
         try {
             //MD5 hashing
@@ -30,14 +30,17 @@ public class APIservice {
             BigInteger bigInt = new BigInteger(1, mdByteArray);
             String hash = bigInt.toString(16);
 
-            
             String uriString = UriComponentsBuilder.fromUriString(marvelURL)
                     .queryParam("ts", newDate)
                     .queryParam("apikey", publicAPIKey)
                     .queryParam("hash", hash)
+                    .queryParam("nameStartsWith", nameStartsWith)
+                    .queryParam("limit", limit)
+                    .queryParam("offset", offset)
                     .toUriString();
             ResponseEntity<String> response = template.getForEntity(uriString, String.class);
             return response;
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             return ResponseEntity.status(500)
