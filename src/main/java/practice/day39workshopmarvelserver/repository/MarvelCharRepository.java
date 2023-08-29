@@ -15,7 +15,7 @@ public class MarvelCharRepository {
     @Autowired
     private JdbcTemplate template;
 
-    private String INSERT_ROW_SQL = "insert into characters values (?,?,?)";
+    private String INSERT_ROW_SQL = "insert ignore into characters values (?,?,?)";
     private String GET_ROW_BY_ID_SQL = "select * from characters where id = ?";
 
     public void saveCharacter(MarvelChar mChar){

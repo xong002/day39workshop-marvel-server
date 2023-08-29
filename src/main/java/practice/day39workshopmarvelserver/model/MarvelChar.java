@@ -17,7 +17,7 @@ public class MarvelChar {
 
         this.id = o.getInt("id");
         this.name = o.getString("name");
-        this.thumbnail = o.getJsonObject("thumbnail").getString("path") + o.getJsonObject("thumbnail").getString("extension");
+        this.thumbnail = o.getJsonObject("thumbnail").getString("path") + "." + o.getJsonObject("thumbnail").getString("extension");
     }
 
 

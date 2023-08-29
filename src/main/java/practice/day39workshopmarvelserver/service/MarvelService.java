@@ -31,7 +31,7 @@ public class MarvelService {
                 MarvelChar mChar = new MarvelChar();
                 JsonObject jsonObj = jsonValue.asJsonObject();
                 mChar.toMarvelChar(jsonObj);
-                System.out.println("CHARACTER NAME>>>>>>>>>>>>>>" + mChar.getName());
+                // System.out.println("CHARACTER NAME>>>>>>>>>>>>>>" + mChar.getThumbnail());
                 repo.saveCharacter(mChar);
             }
         } catch (IOException ioe) {
