@@ -3,6 +3,7 @@ package practice.day39workshopmarvelserver.service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
 import jakarta.json.JsonValue;
+import practice.day39workshopmarvelserver.model.Comment;
 import practice.day39workshopmarvelserver.model.MarvelChar;
 import practice.day39workshopmarvelserver.repository.MarvelCharRepository;
 
@@ -41,5 +43,14 @@ public class MarvelService {
 
     public MarvelChar getMarvelCharById(Integer id){
         return repo.getMarvelCharById(id);
+    }
+
+    public void saveComment(Integer charId, String jsonString){
+        JsonReader r = Json.createReader(new StringReader(jsonString));
+        JsonObject o = r.readObject();
+        Comment newComment = new Comment();
+        newComment.setComments(o.getString("comments"));
+        newComment.setCharId(charId);
+        repo.saveComment(newComment);
     }
 }

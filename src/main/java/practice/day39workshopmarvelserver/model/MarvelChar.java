@@ -14,7 +14,6 @@ public class MarvelChar {
     private String thumbnail;
 
     public void toMarvelChar(JsonObject o){
-
         this.id = o.getInt("id");
         this.name = o.getString("name");
         this.thumbnail = o.getJsonObject("thumbnail").getString("path") + "." + o.getJsonObject("thumbnail").getString("extension");
